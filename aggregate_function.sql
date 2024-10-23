@@ -6,12 +6,16 @@
 
 -- Let's consider a sample Employees table with the following structure:
 
-EmployeeID	Name	Department	Salary	JoiningDate
-        1	Alice	  HR	    60000	2020-01-15
-        2	Bob	      IT	    70000	2019-03-20
-        3	Charlie	  HR	    50000	2021-07-10
-        4	David	  IT	    80000	2018-09-05
-        5	Eve	      Marketing	75000	2019-11-15
++------------+----------+------------+--------+--------------+
+| EmployeeID | Name     | Department | Salary | JoiningDate  |
++------------+----------+------------+--------+--------------+
+| 1          | Alice    | HR         | 60000  | 2020-01-15   |
+| 2          | Bob      | IT         | 70000  | 2019-03-20   |
+| 3          | Charlie  | HR         | 50000  | 2021-07-10   |
+| 4          | David    | IT         | 80000  | 2018-09-05   |
+| 5          | Eve      | Marketing  | 75000  | 2019-11-15   |
++------------+----------+------------+--------+--------------+
+
 
 -- COUNT()
 
@@ -23,10 +27,13 @@ SELECT Department, COUNT(*) AS NumberOfEmployees
 FROM Employees
 GROUP BY Department;
 
--- Department	NumberOfEmployees
--- HR	        2
--- IT	        2
--- Marketing	1
++-------------+---------------------+
+| Department  | NumberOfEmployees   |
++-------------+---------------------+
+| HR          | 2                   |
+| IT          | 2                   |
+| Marketing   | 1                   |
++-------------+---------------------+
 
 
 -- SUM()
@@ -39,10 +46,14 @@ SELECT Department, SUM(Salary) AS TotalSalary
 FROM Employees
 GROUP BY Department;
 
--- Department	TotalSalary
--- HR	         110000
--- IT	         150000
--- Marketing	 75000
++-------------+-------------+
+| Department  | TotalSalary |
++-------------+-------------+
+| HR          | 110000      |
+| IT          | 150000      |
+| Marketing   | 75000       |
++-------------+-------------+
+
 
 -- AVG()
 
@@ -54,12 +65,17 @@ SELECT Department, AVG(Salary) AS AverageSalary
 FROM Employees
 GROUP BY Department;
 
--- Department	AverageSalary
--- HR	        55000
--- IT	        75000
--- Marketing	75000
++-------------+--------------+
+| Department  | AverageSalary|
++-------------+--------------+
+| HR          | 55000        |
+| IT          | 75000        |
+| Marketing   | 75000        |
++-------------+--------------+
+
 
 -- MAX()
+
 -- Find the highest salary among all employees:
 SELECT MAX(Salary) AS HighestSalary FROM Employees;
 
@@ -68,12 +84,17 @@ SELECT Department, MAX(Salary) AS HighestSalary
 FROM Employees
 GROUP BY Department;
 
--- Department	HighestSalary
--- HR       	60000
--- IT	        80000
--- Marketing	75000
++-------------+--------------+
+| Department  | HighestSalary|
++-------------+--------------+
+| HR          | 60000        |
+| IT          | 80000        |
+| Marketing   | 75000        |
++-------------+--------------+
+
 
 -- MIN()
+
 -- Find the lowest salary among all employees:
 SELECT MIN(Salary) AS LowestSalary FROM Employees;
 
@@ -82,7 +103,10 @@ SELECT Department, MIN(Salary) AS LowestSalary
 FROM Employees
 GROUP BY Department;
 
--- Department	LowestSalary
--- HR	         50000
--- IT	         70000
--- Marketing	 75000
++-------------+-------------+
+| Department  | LowestSalary|
++-------------+-------------+
+| HR          | 50000       |
+| IT          | 70000       |
+| Marketing   | 75000       |
++-------------+-------------+
