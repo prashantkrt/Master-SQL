@@ -277,6 +277,14 @@ WHERE ManagerID IS NOT NULL
 GROUP BY ManagerID
 HAVING COUNT(*) > 1;
 
+-- or both are same
+
+SELECT ManagerID, COUNT(*) AS NumberOfSubordinates
+FROM Employees
+GROUP BY ManagerID
+HAVING COUNT(*) > 1;
+
+
 
 Table: Customers
 +------------+--------------+
