@@ -207,12 +207,14 @@ WHERE (Department, Salary) IN (
     GROUP BY Department
 );
 
+-- output :
 +--------------+--------+------------+
 | EmployeeName | Salary | Department |
 +--------------+--------+------------+
 | John         | 60000  | HR         |
 | Charlie      | 80000  | IT         |
 +--------------+--------+------------+
+
 
 -- Question 13: Find departments that have more than two employees.
 
@@ -303,6 +305,63 @@ FROM Customers C
 JOIN Orders O ON C.CustomerID = O.CustomerID
 GROUP BY C.CustomerID, C.CustomerName
 HAVING COUNT(O.OrderID) > 1;
+
+Employees
++------------+--------------+-------------+--------+
+| EmployeeID | EmployeeName | DepartmentID| Salary |
++------------+--------------+-------------+--------+
+|     1      |     John     |      1      | 60000  |
+|     2      |    Alice     |      2      | 50000  |
+|     3      |      Bob     |      1      | 55000  |
+|     4      |   Charlie    |      2      | 80000  |
+|     5      |    David     |      3      | 60000  |
++------------+--------------+-------------+--------+
+
+Departments
++-------------+-----------------+
+| DepartmentID| DepartmentName  |
++-------------+-----------------+
+|      1      |       HR        |
+|      2      |       IT        |
+|      3      |   Marketing     |
++-------------+-----------------+
+
+-- Question: List all employees along with their respective department names.
+SELECT E.EmployeeName, D.DepartmentName
+FROM Employees E
+JOIN Departments D ON E.DepartmentID = D.DepartmentID;
+
+-- Question: Find the number of employees in each department.
+SELECT D.DepartmentName, COUNT(E.EmployeeID) AS NumberOfEmployees
+FROM Departments D
+LEFT JOIN Employees E ON D.DepartmentID = E.DepartmentID
+GROUP BY D.DepartmentName;
+
+-- Question: Find all employees who have the same salary as at least one other employee.
+SELECT E1.EmployeeName, E1.Salary
+FROM Employees E1
+JOIN Employees E2 ON E1.Salary = E2.Salary AND E1.EmployeeID <> E2.EmployeeID;
+
+
++------------+--------------+-------------+--------+------------+
+| EmployeeID | EmployeeName | DepartmentID| Salary | ManagerID  |
++------------+--------------+-------------+--------+------------+
+|     1      |     John     |      1      | 60000  |   NULL     |  -- No manager (Top-level)
+|     2      |    Alice     |      2      | 50000  |      1     |  -- Managed by John
+|     3      |      Bob     |      1      | 55000  |      1     |  -- Managed by John
+|     4      |   Charlie    |      2      | 80000  |      1     |  -- Managed by John
+|     5      |    David     |      3      | 60000  |      2     |  -- Managed by Alice
+|     6      |     Eve      |      2      | 70000  |      2     |  -- Managed by Alice
++------------+--------------+-------------+--------+------------+
+
+-- Question: List employees who earn more than their manager.
+SELECT E1.EmployeeName, E1.Salary, E2.EmployeeName AS ManagerName
+FROM Employees E1
+JOIN Employees E2 ON E1.ManagerID = E2.EmployeeID
+WHERE E1.Salary > E2.Salary;
+
+
+
 
 
 
