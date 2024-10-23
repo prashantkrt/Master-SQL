@@ -15,15 +15,22 @@ CREATE TABLE Orders
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) -- Foreign key constraint
 );
 
--- CustomerID	  CustomerName	  Country
--- 1	           Alice	      USA
--- 2	           Bob	          UK
--- 3	           Charlie	      USA
---
--- OrderID	CustomerID	OrderDate	Amount
--- 101	          1	     2024-01-10	150.00
--- 102	          2	     2024-01-11	200.00
--- 103	          1	     2024-01-12	250.00
++------------+--------------+---------+
+| CustomerID | CustomerName  | Country |
++------------+--------------+---------+
+| 1          | Alice         | USA     |
+| 2          | Bob           | UK      |
+| 3          | Charlie       | USA     |
++------------+--------------+---------+
+
++---------+------------+------------+--------+
+| OrderID | CustomerID | OrderDate  | Amount |
++---------+------------+------------+--------+
+| 101     | 1          | 2024-01-10 | 150.00 |
+| 102     | 2          | 2024-01-11 | 200.00 |
+| 103     | 1          | 2024-01-12 | 250.00 |
++---------+------------+------------+--------+
+
 
 SELECT c.CustomerID,
        c.CustomerName,
@@ -34,10 +41,14 @@ FROM Customers c
          INNER JOIN
      Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	OrderID	OrderDate	Amount
--- 1	            Alice	        1	2024-01-10	150.00
--- 1	            Alice	        3	2024-01-12	250.00
--- 2	            Bob	            2	2024-01-11	200.00
++------------+--------------+---------+------------+--------+
+| CustomerID | CustomerName | OrderID | OrderDate  | Amount |
++------------+--------------+---------+------------+--------+
+| 1          | Alice        | 1       | 2024-01-10 | 150.00 |
+| 1          | Alice        | 3       | 2024-01-12 | 250.00 |
+| 2          | Bob          | 2       | 2024-01-11 | 200.00 |
++------------+--------------+---------+------------+--------+
+
 
 SELECT c.CustomerID,
        c.CustomerName,
@@ -48,11 +59,15 @@ FROM Customers c
          LEFT JOIN
      Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	OrderID	OrderDate	Amount
--- 1	        Alice	            1	2024-01-10	150.00
--- 1	        Alice	            3	2024-01-12	250.00
--- 2	        Bob	                2	2024-01-11	200.00
--- 3	        Charlie	            NULL	NULL	NULL
++------------+--------------+---------+------------+--------+
+| CustomerID | CustomerName | OrderID | OrderDate  | Amount |
++------------+--------------+---------+------------+--------+
+| 1          | Alice        | 1       | 2024-01-10 | 150.00 |
+| 1          | Alice        | 3       | 2024-01-12 | 250.00 |
+| 2          | Bob          | 2       | 2024-01-11 | 200.00 |
+| 3          | Charlie      | NULL    | NULL       | NULL   |
++------------+--------------+---------+------------+--------+
+
 
 SELECT c.CustomerID,
        c.CustomerName,
@@ -63,10 +78,14 @@ FROM Customers c
          RIGHT JOIN
      Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	OrderID	    OrderDate	Amount
--- 1	            Alice	            1	2024-01-10	150.00
--- 2	             Bob	            2	2024-01-11	200.00
--- 1	            Alice	            3	2024-01-12	250.00
++------------+--------------+---------+------------+--------+
+| CustomerID | CustomerName | OrderID | OrderDate  | Amount |
++------------+--------------+---------+------------+--------+
+| 1          | Alice        | 1       | 2024-01-10 | 150.00 |
+| 2          | Bob          | 2       | 2024-01-11 | 200.00 |
+| 1          | Alice        | 3       | 2024-01-12 | 250.00 |
++------------+--------------+---------+------------+--------+
+
 
 SELECT c.CustomerID,
        c.CustomerName,
@@ -77,11 +96,15 @@ FROM Customers c
          FULL OUTER JOIN
      Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	OrderID	OrderDate	Amount
--- 1	        Alice	            1	2024-01-10	150.00
--- 1	        Alice	            3	2024-01-12	250.00
--- 2	        Bob	                2	2024-01-11	200.00
--- 3	        Charlie	            NULL	NULL	NULL
++------------+--------------+---------+------------+--------+
+| CustomerID | CustomerName | OrderID | OrderDate  | Amount |
++------------+--------------+---------+------------+--------+
+| 1          | Alice        | 1       | 2024-01-10 | 150.00 |
+| 1          | Alice        | 3       | 2024-01-12 | 250.00 |
+| 2          | Bob          | 2       | 2024-01-11 | 200.00 |
+| 3          | Charlie      | NULL    | NULL       | NULL   |
++------------+--------------+---------+------------+--------+
+
 
 CREATE TABLE Customers
 (
@@ -117,42 +140,56 @@ SELECT *
 FROM Customers c
          INNER JOIN Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	ContactEmail	    OrderID	CustomerID	OrderDate	Amount
--- 1	                Alice	alice@example.com	1	        1	    2024-01-10	150.00
--- 1	                Alice	alice@example.com	3	        1	    2024-01-12	250.00
--- 2	                Bob	    bob@example.com	    2	        2	    2024-01-11	200.00
--- 3	                Charlie	charlie@example.com	4	        3	    2024-01-15	300.00
++------------+--------------+--------------------+---------+------------+------------+--------+
+| CustomerID | CustomerName | ContactEmail       | OrderID | CustomerID | OrderDate  | Amount |
++------------+--------------+--------------------+---------+------------+------------+--------+
+| 1          | Alice        | alice@example.com  | 1       | 1          | 2024-01-10 | 150.00 |
+| 1          | Alice        | alice@example.com  | 3       | 1          | 2024-01-12 | 250.00 |
+| 2          | Bob          | bob@example.com    | 2       | 2          | 2024-01-11 | 200.00 |
+| 3          | Charlie      | charlie@example.com| 4       | 3          | 2024-01-15 | 300.00 |
++------------+--------------+--------------------+---------+------------+------------+--------+
+
 
 SELECT *
 FROM Customers c
          LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	ContactEmail	OrderID	CustomerID	OrderDate	Amount
--- 1	            Alice	    alice@example.com	1	   1	  2024-01-10	150.00
--- 1	            Alice	    alice@example.com	3	   1	  2024-01-12	250.00
--- 2	            Bob	        bob@example.com	    2	   2	  2024-01-11	200.00
--- 3	            Charlie	    charlie@example.com	4	   3	  2024-01-15	300.00
--- 4	            David	    david@example.com	NULL	NULL	NULL	NULL
++------------+--------------+--------------------+---------+------------+------------+--------+
+| CustomerID | CustomerName | ContactEmail       | OrderID | CustomerID | OrderDate  | Amount |
++------------+--------------+--------------------+---------+------------+------------+--------+
+| 1          | Alice        | alice@example.com  | 1       | 1          | 2024-01-10 | 150.00 |
+| 1          | Alice        | alice@example.com  | 3       | 1          | 2024-01-12 | 250.00 |
+| 2          | Bob          | bob@example.com    | 2       | 2          | 2024-01-11 | 200.00 |
+| 3          | Charlie      | charlie@example.com| 4       | 3          | 2024-01-15 | 300.00 |
+| 4          | David        | david@example.com  | NULL    | NULL       | NULL       | NULL   |
++------------+--------------+--------------------+---------+------------+------------+--------+
+
 
 SELECT *
 FROM Customers c
          RIGHT JOIN Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	ContactEmail	        OrderID	CustomerID	OrderDate	Amount
--- 1	            Alice	      alice@example.com     	1	1	        2024-01-10	150.00
--- 2	            Bob	          bob@example.com	        2	2	        2024-01-11	200.00
--- 1	            Alice	      alice@example.com	        3	1	        2024-01-12	250.00
--- 3	            Charlie	      charlie@example.com	    4	3	        2024-01-15	300.00
--- NULL	            NULL	           NULL	                5	NULL	    2024-01-20	100.00
++------------+--------------+--------------------+---------+------------+------------+--------+
+| CustomerID | CustomerName | ContactEmail       | OrderID | CustomerID | OrderDate  | Amount |
++------------+--------------+--------------------+---------+------------+------------+--------+
+| 1          | Alice        | alice@example.com  | 1       | 1          | 2024-01-10 | 150.00 |
+| 2          | Bob          | bob@example.com    | 2       | 2          | 2024-01-11 | 200.00 |
+| 1          | Alice        | alice@example.com  | 3       | 1          | 2024-01-12 | 250.00 |
+| 3          | Charlie      | charlie@example.com| 4       | 3          | 2024-01-15 | 300.00 |
+| NULL       | NULL         | NULL               | 5       | NULL       | 2024-01-20 | 100.00 |
++------------+--------------+--------------------+---------+------------+------------+--------+
 
 SELECT *
 FROM Customers c
          FULL OUTER JOIN Orders o ON c.CustomerID = o.CustomerID;
 
--- CustomerID	CustomerName	ContactEmail	OrderID	CustomerID	OrderDate	Amount
--- 1	        Alice	        alice@example.com	1	    1	2024-01-10	150.00
--- 1	        Alice	        alice@example.com	3	    1	2024-01-12	250.00
--- 2	        Bob	            bob@example.com	    2	    2	2024-01-11	200.00
--- 3	        Charlie	        charlie@example.com	4	    3	2024-01-15	300.00
--- 4	        David	        david@example.com	NULL    NULL	NULL	NULL
--- NULL	        NULL	        NULL	            5	    NULL 2024-01-20	100.00
++------------+--------------+--------------------+---------+------------+------------+--------+
+| CustomerID | CustomerName | ContactEmail       | OrderID | CustomerID | OrderDate  | Amount |
++------------+--------------+--------------------+---------+------------+------------+--------+
+| 1          | Alice        | alice@example.com  | 1       | 1          | 2024-01-10 | 150.00 |
+| 1          | Alice        | alice@example.com  | 3       | 1          | 2024-01-12 | 250.00 |
+| 2          | Bob          | bob@example.com    | 2       | 2          | 2024-01-11 | 200.00 |
+| 3          | Charlie      | charlie@example.com| 4       | 3          | 2024-01-15 | 300.00 |
+| 4          | David        | david@example.com  | NULL    | NULL       | NULL       | NULL   |
+| NULL       | NULL         | NULL               | 5       | NULL       | 2024-01-20 | 100.00 |
++------------+--------------+--------------------+---------+------------+------------+--------+
