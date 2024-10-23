@@ -31,23 +31,31 @@ SELECT Status, COUNT(*) AS Count FROM Orders GROUP BY Status;
 -- Example Data in the Orders Table
 -- Assuming the Orders table contains the following data:
 
--- OrderID	CustomerID	OrderDate	Status	TotalAmount
--- 1	101	2024-01-05 10:00:00	    Shipped	  50.00
--- 2	102	2024-01-06 11:30:00	    Pending	  30.00
--- 3	103	2024-01-07 14:20:00	    Delivered 75.00
--- 4	101	2024-01-08 09:15:00	    Shipped	  45.00
--- 5	104	2024-01-09 12:45:00	    Cancelled 60.00
--- 6	102	2024-01-10 15:00:00	    Pending	  25.00
--- 7	103	2024-01-11 18:00:00	    Delivered 100.00
--- 8	101	2024-01-12 20:30:00	    Shipped   80.00
++---------+------------+---------------------+----------+-------------+
+| OrderID | CustomerID | OrderDate           | Status   | TotalAmount |
++---------+------------+---------------------+----------+-------------+
+| 1       | 101        | 2024-01-05 10:00:00 | Shipped   | 50.00      |
+| 2       | 102        | 2024-01-06 11:30:00 | Pending   | 30.00      |
+| 3       | 103        | 2024-01-07 14:20:00 | Delivered | 75.00      |
+| 4       | 101        | 2024-01-08 09:15:00 | Shipped   | 45.00      |
+| 5       | 104        | 2024-01-09 12:45:00 | Cancelled | 60.00      |
+| 6       | 102        | 2024-01-10 15:00:00 | Pending   | 25.00      |
+| 7       | 103        | 2024-01-11 18:00:00 | Delivered | 100.00     |
+| 8       | 101        | 2024-01-12 20:30:00 | Shipped   | 80.00      |
++---------+------------+---------------------+----------+-------------+
+
+
 -- Expected Output
 -- After executing the above query, the output would look like this:
---
--- Status	Count
--- Shipped	  3
--- Pending	  2
--- Delivered  2
--- Cancelled  1
+
++----------+-------+
+| Status   | Count |
++----------+-------+
+| Shipped  | 3     |
+| Pending  | 2     |
+| Delivered| 2     |
+| Cancelled| 1     |
++----------+-------+
 
 -- Explanation of the Output
 -- Shipped: There are 3 orders with the status 'Shipped'.
@@ -61,25 +69,32 @@ SELECT CustomerID, SUM(TotalAmount) AS TotalSpent FROM Orders GROUP BY CustomerI
 -- Example Data in the Orders Table
 -- Let's assume the Orders table contains the following data:
 
--- OrderID	CustomerID	OrderDate	Status	TotalAmount
--- 1	101	2024-01-05 10:00:00	   Shipped	  50.00
--- 2	102	2024-01-06 11:30:00	   Pending	  30.00
--- 3	101	2024-01-08 09:15:00	   Shipped	  45.00
--- 4	103	2024-01-07 14:20:00	   Delivered  75.00
--- 5	102	2024-01-10 15:00:00	   Pending	  25.00
--- 6	104	2024-01-09 12:45:00	   Cancelled  60.00
--- 7	101	2024-01-12 20:30:00	   Shipped	  80.00
--- 8	103	2024-01-11 18:00:00	   Delivered  100.00
---
++---------+------------+---------------------+----------+-------------+
+| OrderID | CustomerID | OrderDate           | Status   | TotalAmount |
++---------+------------+---------------------+----------+-------------+
+| 1       | 101        | 2024-01-05 10:00:00 | Shipped   | 50.00      |
+| 2       | 102        | 2024-01-06 11:30:00 | Pending   | 30.00      |
+| 3       | 101        | 2024-01-08 09:15:00 | Shipped   | 45.00      |
+| 4       | 103        | 2024-01-07 14:20:00 | Delivered | 75.00      |
+| 5       | 102        | 2024-01-10 15:00:00 | Pending   | 25.00      |
+| 6       | 104        | 2024-01-09 12:45:00 | Cancelled | 60.00      |
+| 7       | 101        | 2024-01-12 20:30:00 | Shipped   | 80.00      |
+| 8       | 103        | 2024-01-11 18:00:00 | Delivered | 100.00     |
++---------+------------+---------------------+----------+-------------+
+
+
 -- Expected Output
 -- After executing the query, the output would look like this:
---
--- CustomerID	TotalSpent
--- 101	         175.00
--- 102	         55.00
--- 103	         175.00
--- 104	         60.00
---
+
++------------+-------------+
+| CustomerID | TotalSpent  |
++------------+-------------+
+| 101        | 175.00      |
+| 102        | 55.00       |
+| 103        | 175.00      |
+| 104        | 60.00       |
++------------+-------------+
+
 -- Explanation of the Output
 -- CustomerID 101: The total amount spent is
 -- 50.00+45.00+80.00=175.00
