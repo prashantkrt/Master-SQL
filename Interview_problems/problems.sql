@@ -1,4 +1,4 @@
--- 1.) second-highest salary from the Employees
+-- Question 1: second-highest salary from the Employees
 
 SELECT MAX(Salary) AS SecondMaxSalary
 FROM Employees
@@ -15,7 +15,7 @@ LIMIT 1 OFFSET 1;
 -- OFFSET 1: This skips the first row (which is the highest salary), effectively returning the second-highest salary.
 
 
--- 2.) Query to Delete Duplicate name of the employee
+-- Question 2: Query to Delete Duplicate name of the employee
 -- Given Employees Table
 +------------+--------------+------------+--------+-----------+
 | EmployeeID | EmployeeName | Department | Salary | ManagerID |
@@ -35,7 +35,7 @@ WHERE EmployeeID NOT IN (
     GROUP BY EmployeeName
 );
 
--- 3.)  Find Departments with Total Salary Greater Than a Certain Amount
+-- Question 3: Find Departments with Total Salary Greater Than a Certain Amount
 -- Tables:
 -- Employees(EmployeeID, EmployeeName, Department, Salary)
 -- Departments(DepartmentID, DepartmentName)
@@ -47,7 +47,7 @@ GROUP BY D.DepartmentName
 HAVING SUM(E.Salary) > 100000;
 
 
--- 4. Count the number of employees in each department and only show departments with more than 2 employees.
+-- Question 4: Count the number of employees in each department and only show departments with more than 2 employees.
 -- Employees(EmployeeID, EmployeeName, Department, Salary)
 SELECT E.Department, COUNT(*) AS NumberOfEmployees
 FROM Employees E
@@ -63,7 +63,7 @@ HAVING COUNT(*) > 2;
 |      4     | Charlie      | 80000  | IT         |
 +------------+--------------+--------+------------+
 
--- 5.)Find Employees with Salaries Above Average in Their Department
+-- Question 5: Find Employees with Salaries Above Average in Their Department
 -- Get the names and salaries of employees whose salary is above the average salary of their respective departments.
 
 -- Employees with Salaries Above Average in Their Department
@@ -123,7 +123,7 @@ WHERE Salary > (
 |     5      |    David     |     HR     | 60000  |     2     |
 +------------+--------------+------------+--------+-----------+
 
--- 6.) Find Departments with More Than One Manager
+-- Question 6: Find Departments with More Than One Manager
 -- Question: List departments that have more than one unique manager.
 
 SELECT E.Department, COUNT(DISTINCT E.ManagerID) AS NumberOfManagers
@@ -132,7 +132,7 @@ GROUP BY E.Department
 HAVING COUNT(DISTINCT E.ManagerID) > 1;
 
 
--- 7.) Retrieve Employees and Their Departments with Specific Criteria
+-- Question 7: Retrieve Employees and Their Departments with Specific Criteria
 -- Question: Get the names of employees and their departments for those earning more than 50,000 in the IT department.
 -- Tables:
 -- Employees(EmployeeID, EmployeeName, Department, Salary)
@@ -155,13 +155,13 @@ WHERE E.Salary > 50000 AND D.DepartmentName = 'IT';
 +-------------+---------------+------------+--------+-----------+
 
 
---8.)  Find the average salary of each department.
+--Question 8:  Find the average salary of each department.
 
 SELECT Department, AVG(Salary) AS AverageSalary
 FROM Employees
 GROUP BY Department;
 
---9.) List all employees who earn more than the average salary in their department.
+--Question 9:List all employees who earn more than the average salary in their department.
 
 -- Employees Earning More Than the Average in Their Department
 SELECT E1.EmployeeName, E1.Salary, E1.Department
@@ -181,13 +181,13 @@ WHERE E1.Salary > (
     FROM Employees
 );
 
---10.) Count the number of employees in each department.
+--Question 10: Count the number of employees in each department.
 
 SELECT Department, COUNT(*) AS NumberOfEmployees
 FROM Employees
 GROUP BY Department;
 
--- 11.) Find employees with the same name but different salaries.
+-- Question 11: Find employees with the same name but different salaries.
 
 -- <> means not equal in sql
 SELECT E1.EmployeeName, E1.Salary
@@ -195,7 +195,7 @@ FROM Employees E1
 JOIN Employees E2 ON E1.EmployeeName = E2.EmployeeName
 WHERE E1.EmployeeID <> E2.EmployeeID AND E1.Salary <> E2.Salary;
 
--- 12.) List the employees with the highest salary in each department.
+-- Question 12: List the employees with the highest salary in each department.
 -- note imp.
 -- When using aggregate functions like MAX() in conjunction with other columns (like EmployeeName in your case),
 -- you need to ensure that all selected columns are either part of an aggregate function or included in the GROUP BY clause.
@@ -214,9 +214,95 @@ WHERE (Department, Salary) IN (
 | Charlie      | 80000  | IT         |
 +--------------+--------+------------+
 
--- 13.) Find departments that have more than two employees.
+-- Question 13: Find departments that have more than two employees.
 
 SELECT Department
 FROM Employees
 GROUP BY Department
 HAVING COUNT(*) > 2;
+
+
++------------+--------------+-------------+--------+
+| EmployeeID | EmployeeName | DepartmentID| Salary |
++------------+--------------+-------------+--------+
+|     1      |     John     |      1      | 60000  |
+|     2      |    Alice     |      2      | 50000  |
+|     3      |      Bob     |      1      | 55000  |
+|     4      |   Charlie    |      2      | 80000  |
+|     5      |    David     |      3      | 60000  |
++------------+--------------+-------------+--------+
+
+-- Question 14: Find Departments with More Than One Employee
+
+SELECT DepartmentID, COUNT(*) AS NumberOfEmployees
+FROM Employees
+GROUP BY DepartmentID
+HAVING COUNT(*) > 1;
+
++------------+--------------+-------------+--------+
+| EmployeeID | EmployeeName | DepartmentID| Salary |
++------------+--------------+-------------+--------+
+|     1      |     John     |      1      | 60000  |
+|     2      |    Alice     |      2      | 50000  |
+|     3      |      Bob     |      1      | 55000  |
+|     4      |   Charlie    |      2      | 80000  |
+|     5      |    David     |      3      | 60000  |
++------------+--------------+-------------+--------+
+
+-- Question 15: Write a SQL query to find departments with an average salary greater than 55000.
+
+SELECT DepartmentID, AVG(Salary) AS AverageSalary
+FROM Employees
+GROUP BY DepartmentID
+HAVING AVG(Salary) > 55000;
+
++------------+--------------+-------------+--------+-----------+
+| EmployeeID | EmployeeName | DepartmentID| Salary | ManagerID |
++------------+--------------+-------------+--------+-----------+
+|     1      |     John     |      1      | 60000  |   NULL    |
+|     2      |    Alice     |      2      | 50000  |     1     |
+|     3      |      Bob     |      1      | 55000  |     1     |
+|     4      |   Charlie    |      2      | 80000  |     1     |
+|     5      |    David     |      3      | 60000  |     2     |
++------------+--------------+-------------+--------+-----------+
+
+
+-- Question 16: Write a SQL query to find managers who have more than one subordinate.
+
+SELECT ManagerID, COUNT(*) AS NumberOfSubordinates
+FROM Employees
+WHERE ManagerID IS NOT NULL
+GROUP BY ManagerID
+HAVING COUNT(*) > 1;
+
+
+Table: Customers
++------------+--------------+
+| CustomerID | CustomerName |
++------------+--------------+
+|     1      |     Alice    |
+|     2      |      Bob     |
+|     3      |   Charlie    |
++------------+--------------+
+
+Table: Orders
++---------+------------+-------------+
+| OrderID | CustomerID | TotalAmount |
++---------+------------+-------------+
+|    1    |     1      |     100     |
+|    2    |     2      |     200     |
+|    3    |     1      |     300     |
+|    4    |     3      |     150     |
+|    5    |     2      |     50      |
++---------+------------+-------------+
+
+-- Question 17: Write a SQL query to count the number of orders per customer and show only customers with more than one order.
+
+SELECT C.CustomerID, C.CustomerName, COUNT(O.OrderID) AS NumberOfOrders
+FROM Customers C
+JOIN Orders O ON C.CustomerID = O.CustomerID
+GROUP BY C.CustomerID, C.CustomerName
+HAVING COUNT(O.OrderID) > 1;
+
+
+
