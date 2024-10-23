@@ -1,11 +1,30 @@
 -- Sample Employee Table
 -- Assume we have an Employee table with the following structure:
 
-EmployeeID	FirstName	LastName	Email	               Department
-        1	John	    Doe	       john.doe@example.com	    Sales
-        2	Jane	    Smith	   jane.smith@example.com	Marketing
-        3	Alice	    Johnson	   alice.j@example.com	    IT
-        4	Bob	        Brown	   bob.brown@example.com	HR
+CREATE TABLE Employees (
+   EmployeeID INT PRIMARY KEY,
+   FirstName VARCHAR(50),
+   LastName VARCHAR(50),
+   Email VARCHAR(100),
+   Department VARCHAR(50)
+);
+
+INSERT INTO Employees (EmployeeID, FirstName, LastName, Email, Department) VALUES
+(1, 'John', 'Doe', 'john.doe@example.com', 'Sales'),
+(2, 'Jane', 'Smith', 'jane.smith@example.com', 'Marketing'),
+(3, 'Alice', 'Johnson', 'alice.j@example.com', 'IT'),
+(4, 'Bob', 'Brown', 'bob.brown@example.com', 'HR');
+
+
++------------+-----------+----------+-------------------------+-------------+
+| EmployeeID | FirstName | LastName | Email                   | Department  |
++------------+-----------+----------+-------------------------+-------------+
+| 1          | John      | Doe      | john.doe@example.com    | Sales       |
+| 2          | Jane      | Smith    | jane.smith@example.com  | Marketing   |
+| 3          | Alice     | Johnson  | alice.j@example.com     | IT          |
+| 4          | Bob       | Brown    | bob.brown@example.com   | HR          |
++------------+-----------+----------+-------------------------+-------------+
+
 
 -- CONCAT
 -- Concatenates two or more strings together.
