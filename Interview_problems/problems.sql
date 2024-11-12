@@ -11,14 +11,26 @@ FROM Employees
 ORDER BY Salary DESC
 LIMIT 1 OFFSET 1; -- when LIMIT is used with a single parameter, it specifies only the count of rows to return.
 
--- or -- when want all the entry data
+-- or --
 
-SELECT * FROM EMPLOYEE
-GROUP BY SALARY
+SELECT DISTINCT SALARY
+FROM EMPLOYEE
 ORDER BY SALARY DESC
-LIMIT 1,1;  -- LIMIT offset, count
+LIMIT 1, 1;  -- LIMIT offset, count
 -- LIMIT offset, count => the offset is 1, and the count is 1
 --when LIMIT is used with a single parameter, it specifies only the count of rows to return.
+
+
+-- or -- when want all the entry data
+
+SELECT *
+FROM employee
+WHERE salary = (
+    SELECT DISTINCT salary
+    FROM employee
+    ORDER BY salary DESC
+    LIMIT 1 OFFSET 1 -- LIMIT 1, 1 cannot use here  as  using LIMIT 1, 1 directly in a subquery within a WHERE clause is typically not supported.
+    );
 
 -- LIMIT 1: This limits the result to one row.
 -- OFFSET 1: This skips the first row (which is the highest salary), effectively returning the second-highest salary.
