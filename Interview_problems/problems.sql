@@ -4,12 +4,21 @@ SELECT MAX(Salary) AS SecondMaxSalary
 FROM Employees
 WHERE Salary < (SELECT MAX(Salary) FROM Employees);
 
--- or
+-- or -- only salary
 
 SELECT Salary
 FROM Employees
 ORDER BY Salary DESC
-LIMIT 1 OFFSET 1;
+LIMIT 1 OFFSET 1; -- when LIMIT is used with a single parameter, it specifies only the count of rows to return.
+
+-- or -- when want all the entry data
+
+SELECT * FROM EMPLOYEE
+GROUP BY SALARY
+ORDER BY SALARY DESC
+LIMIT 1,1;  -- LIMIT offset, count
+-- LIMIT offset, count => the offset is 1, and the count is 1
+--when LIMIT is used with a single parameter, it specifies only the count of rows to return.
 
 -- LIMIT 1: This limits the result to one row.
 -- OFFSET 1: This skips the first row (which is the highest salary), effectively returning the second-highest salary.
